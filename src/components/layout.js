@@ -19,18 +19,13 @@ const Layout = ({ children }) => (
         site {
           siteMetadata {
             title
-            author
           }
         }
       }
     `}
     render={data => (
       <>
-        <Header
-          siteTitle={`${data.site.siteMetadata.title} by ${
-            data.site.siteMetadata.author
-          }`}
-        />
+        <Header siteTitle={data.site.siteMetadata.title} />
         <div
           style={{
             margin: `0 auto`,
