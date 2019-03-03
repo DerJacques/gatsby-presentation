@@ -1,3 +1,5 @@
+// index.js
+
 import React from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
@@ -11,8 +13,10 @@ const IndexPage = ({ data }) => {
       <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
       {data.allContentfulBlogPost.edges.map(({ node }) => (
         <div key={node.contentful_id}>
-          <Link to={node.slug}>
-            <h2>{node.title}</h2>
+          <Link to={`/${node.slug}`}>
+            <h2>
+              {node.title} {node.slug}
+            </h2>
           </Link>
           <Img fluid={node.heroImage.fluid} />
           <p>{node.description.description}</p>

@@ -2,6 +2,9 @@
 // Vi tilføjer contentful og remark
 // Husk API keys!
 
+// gatsby-config.js
+// Vi tilføjer filesystem og remark
+
 module.exports = {
   siteMetadata: {
     title: `Fun fun fun`,
