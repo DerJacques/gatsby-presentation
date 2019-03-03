@@ -1,3 +1,6 @@
+// layout.js
+// Vi ændrer lidt på titlen
+
 /**
  * Layout component that queries for data
  * with Gatsby's StaticQuery component

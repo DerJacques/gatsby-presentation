@@ -1,2 +1,2 @@
 // getsby-config.js
-// Update title
+// Update title -> Fun fun fun
