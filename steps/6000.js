@@ -1,5 +1,3 @@
-// index.js
-
 import React from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
@@ -14,9 +12,7 @@ const IndexPage = ({ data }) => {
       {data.allContentfulBlogPost.edges.map(({ node }) => (
         <div key={node.contentful_id}>
           <Link to={`/${node.slug}`}>
-            <h2>
-              {node.title} {node.slug}
-            </h2>
+            <h2>{node.title}</h2>
           </Link>
           <Img fluid={node.heroImage.fluid} />
           <p>{node.description.description}</p>
@@ -36,15 +32,6 @@ export const query = graphql`
         node {
           title
           slug
-          author {
-            name
-            email
-            image {
-              fluid {
-                ...GatsbyContentfulFluid
-              }
-            }
-          }
           description {
             description
           }
@@ -54,15 +41,8 @@ export const query = graphql`
             }
           }
           contentful_id
-          body {
-            childMarkdownRemark {
-              timeToRead
-              html
-            }
-          }
         }
       }
-      totalCount
     }
   }
 `
