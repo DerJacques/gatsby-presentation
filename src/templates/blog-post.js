@@ -3,15 +3,15 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
 export default ({ data }) => {
-  console.log(data)
-  const post = data.markdownRemark
+  const post = data.contentfulBlogPost
   return (
     <Layout>
       <div>
-        <h1>{post.frontmatter.title}</h1>
+        <h1>{post.title}</h1>
+        <p>By {post.author.name}</p>
         <div
           dangerouslySetInnerHTML={{
-            __html: post.html,
+            __html: post.body.childMarkdownRemark.html,
           }}
         />
       </div>
@@ -19,14 +19,21 @@ export default ({ data }) => {
   )
 }
 
-export const pageQuery = graphql`
-  query($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
-      html
-      frontmatter {
-        date(formatString: "MMMM DD, YYYY")
-        path
-        title
+export const query = graphql`
+  query($id: String!) {
+    contentfulBlogPost(contentful_id: { eq: $id }) {
+      title
+      slug
+      author {
+        name
+        email
+      }
+      id
+      body {
+        childMarkdownRemark {
+          timeToRead
+          html
+        }
       }
     }
   }

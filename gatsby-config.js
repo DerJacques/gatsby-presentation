@@ -1,3 +1,6 @@
+// gatsby-config.js
+// Vi tilføjer filesystem og remark
+
 module.exports = {
   siteMetadata: {
     title: `Fun fun fun`,
@@ -28,13 +31,29 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: `gatsby-source-contentful`,
       options: {
-        path: `${__dirname}/blog-posts`,
-        name: "markdown-pages",
+        spaceId: `fr8b7lt3pz6v`,
+        // Learn about environment variables: https://gatsby.app/env-vars
+        accessToken: `ef0176a0e783c2e19237507e92d1cdde42cc0aae941aaf08a5a9be7b5619888d`,
+        host: `preview.contentful.com`,
       },
     },
-    `gatsby-transformer-remark`,
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        // CommonMark mode (default: true)
+        commonmark: true,
+        // Footnotes mode (default: true)
+        footnotes: true,
+        // Pedantic mode (default: true)
+        pedantic: true,
+        // GitHub Flavored Markdown mode (default: true)
+        gfm: true,
+        // Plugins configs
+        plugins: [],
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',

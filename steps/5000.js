@@ -1,34 +1,41 @@
 // gatsby-node.js
 
-const path = require("path")
+const path = require(`path`)
 
-exports.createPages = ({ actions, graphql }) => {
+/**
+ * Implement Gatsby's Node APIs in this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/node-apis/
+ */
+
+// You can delete this file if you're not using it
+
+exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
-
-  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
-
+  // **Note:** The graphql function call returns a Promise
+  // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
   return graphql(`
     {
-      allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+      allContentfulBlogPost {
         edges {
           node {
-            frontmatter {
-              path
-            }
+            title
+            slug
+            contentful_id
           }
         }
       }
     }
   `).then(result => {
-    if (result.errors) {
-      return Promise.reject(result.errors)
-    }
-
-    result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    result.data.allContentfulBlogPost.edges.forEach(({ node }) => {
       createPage({
-        path: node.frontmatter.path,
-        component: blogPostTemplate,
-        context: {}, // additional data can be passed via context
+        path: node.slug,
+        component: path.resolve(`./src/templates/blog-post.js`),
+        context: {
+          // Data passed to context is available
+          // in page queries as GraphQL variables.
+          id: node.contentful_id,
+        },
       })
     })
   })

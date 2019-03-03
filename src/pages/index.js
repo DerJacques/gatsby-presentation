@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
+import Img from "gatsby-image"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -8,11 +9,13 @@ const IndexPage = ({ data }) => {
   return (
     <Layout>
       <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-      {data.allMarkdownRemark.edges.map(({ node }) => (
-        <div key={node.frontmatter.path}>
-          <Link to={node.frontmatter.path}>
-            <h2>{node.frontmatter.title}</h2>
+      {data.allContentfulBlogPost.edges.map(({ node }) => (
+        <div key={node.contentful_id}>
+          <Link to={`/${node.slug}`}>
+            <h2>{node.title}</h2>
           </Link>
+          <Img fluid={node.heroImage.fluid} />
+          <p>{node.description.description}</p>
         </div>
       ))}
       <Link to="/page-2/">Go to page 2</Link>
@@ -24,13 +27,20 @@ export default IndexPage
 
 export const query = graphql`
   query {
-    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+    allContentfulBlogPost {
       edges {
         node {
-          frontmatter {
-            path
-            title
+          title
+          slug
+          description {
+            description
           }
+          heroImage {
+            fluid {
+              ...GatsbyContentfulFluid
+            }
+          }
+          contentful_id
         }
       }
     }
